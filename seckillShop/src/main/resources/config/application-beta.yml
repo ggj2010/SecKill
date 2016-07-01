@@ -1,0 +1,107 @@
+#不使用spring的redis  调用自己封装的redis
+redis:
+  host: 123.56.118.135
+  passwords: kF9wjNBC0IsxYuHW/lXDIw==
+  port: 6379
+  timeout: 100000
+  maxtotal: 50000
+  maxidle: 500
+  minidle: 300
+  maxwaitmillis: 1000
+  testonborrow: true
+  testwhileidle: true
+
+system:
+      #是否启用ip黑名单功能
+      isBlackipLimit: true
+      #黑名单ip 禁止访问时间
+      blackipLimitTime: 60*60*24
+      #一分钟ip限制调用100次
+      ipMaxInvokeNumber: 60
+      #半小时登陆错误次数限制调用次
+      loginErrorMaxNumber: 3
+
+thread:
+    #核心线程数,线程池维护线程的最少数量
+    corePoolSize: 30
+    #线程池维护线程的最大数量
+    maxPoolSize: 50
+    #线程池所使用的缓冲队列
+    queueCapacity: 10000
+    #线程池维护线程所允许的空闲时间
+    keepAliveSeconds: 300000
+
+kafka:
+    #可以是集群 其他的配置弄默认就好了
+    bootstrapServers: 123.56.118.135:9092
+    topic:
+          #访问日志的log
+          requestlog: requestlog
+          stringlog: log
+
+#多数据源 1主2从
+datasource:
+  #从库数量
+  readSize: 2
+   # 使用druid数据源
+  type: com.alibaba.druid.pool.DruidDataSource
+#主库
+  write:
+    url: jdbc:mysql://localhost:3306/master?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQueryTimeout: 900000
+    validationQuery: SELECT SYSDATE() from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  read1:
+    url: jdbc:mysql://localhost:3306/slave1?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQueryTimeout: 900000
+    validationQuery: SELECT SYSDATE() from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+  read2:
+    url: jdbc:mysql://localhost:3306/slave2?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQueryTimeout: 900000
+    validationQuery: SELECT SYSDATE() from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+
